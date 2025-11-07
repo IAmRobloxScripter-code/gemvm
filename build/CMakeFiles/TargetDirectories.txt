@@ -1,0 +1,4 @@
+/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles/lib.dir
+/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles/gvm.dir
+/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles/edit_cache.dir
+/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles/rebuild_cache.dir
