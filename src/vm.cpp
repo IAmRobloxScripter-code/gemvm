@@ -3,7 +3,7 @@
 #include <fstream>
 
 void GEM_VIRTUAL_MACHINE::exit_handler(uint8_t exit_code)
-{
+{   
     for (object *obj : this->object_stack)
     {
         obj->print();
@@ -116,12 +116,13 @@ void GEM_VIRTUAL_MACHINE::execute()
         {
             block_type scope_type = static_cast<block_type>(this->read<uint8_t>());
             uint8_t up_value_count = this->read<uint8_t>();
+            stack_frame *parent = this->get_current_frame();
             stack_frame *frame = new stack_frame;
-            frame->block_type = scope_type;
+            frame->scope_type = scope_type;
 
             for (uint8_t up_value_index = 0; up_value_index < up_value_count; ++up_value_count)
             {
-                frame->up_values.push_back(this->pop());
+                frame->up_values.push_back(parent->local_values[this->read<uint8_t>()]);
             }
 
             this->stack_frame_stack.push_back(frame);
@@ -139,8 +140,21 @@ void GEM_VIRTUAL_MACHINE::execute()
             this->stack_frame_stack.pop_back();
             break;
         case instructions::store_local:
-            this->get_current_frame()->local_values.push_back(this->pop());
+        {
+            object *value = this->pop();
+            uint8_t id = this->read<uint8_t>();
+            stack_frame *frame = this->get_current_frame();
+            if (frame->local_values.size() < id + 1)
+            {
+                frame->local_values.resize(id + 1);
+                frame->local_values[id] = value;
+            }
+            else
+            {
+                frame->local_values[id] = value;
+            }
             break;
+        }
         case instructions::load_local:
             this->object_stack.push_back(this->get_current_frame()->local_values[this->read<uint8_t>()]);
             break;
@@ -301,11 +315,11 @@ void GEM_VIRTUAL_MACHINE::execute()
         }
         case instructions::ret:
         {
-            while (this->get_current_frame()->block_type != block_type::function)
+            while (this->get_current_frame()->scope_type != block_type::function)
             {
                 this->stack_frame_stack.pop_back();
             };
-            if (this->get_current_frame()->block_type != block_type::global)
+            if (this->get_current_frame()->scope_type != block_type::global)
                 this->stack_frame_stack.pop_back();
             this->ip = this->return_ip_stack.back();
             this->return_ip_stack.pop_back();
@@ -313,11 +327,11 @@ void GEM_VIRTUAL_MACHINE::execute()
         }
         case instructions::close:
         {
-            while (this->get_current_frame()->block_type != block_type::loop)
+            while (this->get_current_frame()->scope_type != block_type::loop)
             {
                 this->stack_frame_stack.pop_back();
             };
-            if (this->get_current_frame()->block_type != block_type::global)
+            if (this->get_current_frame()->scope_type != block_type::global)
                 this->stack_frame_stack.pop_back();
 
             this->stack_frame_stack.pop_back();
@@ -325,14 +339,14 @@ void GEM_VIRTUAL_MACHINE::execute()
         }
         case instructions::skip:
         {
-            while (this->get_current_frame()->block_type != block_type::loop)
+            while (this->get_current_frame()->scope_type != block_type::loop)
             {
                 this->stack_frame_stack.pop_back();
             };
             break;
         };
         case instructions::halt:
-        {
+        {   
             this->halted = true;
             break;
         }
@@ -357,6 +371,9 @@ int main(int argc, char *argv[])
 
     GEM_VIRTUAL_MACHINE *vm = new GEM_VIRTUAL_MACHINE;
     vm->bytes = buffer;
+    stack_frame* global = new stack_frame;
+    global->scope_type = block_type::global;
+    vm->stack_frame_stack.push_back(global);
     vm->execute();
     vm->exit_handler(0);
 

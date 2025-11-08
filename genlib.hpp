@@ -159,9 +159,10 @@ public:
         this->write<uint8_t>(to_uint8(instructions::load_constant));
         this->write<uint32_t>(constant);
     };
-    void write_store_local()
+    void write_store_local(uint8_t id)
     {
         this->write<uint8_t>(to_uint8(instructions::store_local));
+        this->write<uint8_t>(id);
     };
     void write_load_local(uint8_t local)
     {
@@ -192,11 +193,14 @@ public:
     {
         this->write<uint8_t>(to_uint8(instructions::mod));
     };
-    void write_make_frame(uint8_t up_value_count, block_type scope_type)
+    void write_make_frame(block_type scope_type, std::vector<uint8_t> up_values)
     {
         this->write<uint8_t>(to_uint8(instructions::make_frame));
         this->write<uint8_t>(to_uint8(scope_type));
-        this->write<uint8_t>(up_value_count);
+        this->write<uint8_t>(to_uint8(up_values.size()));
+        for (uint8_t up_value : up_values) {
+            this->write<uint8_t>(up_value);
+        }
     };
     void write_delete_frame()
     {
