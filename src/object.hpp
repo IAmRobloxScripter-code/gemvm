@@ -140,7 +140,7 @@ struct null_object : public object
 
 struct function_object : public object
 {
-    std::vector<object *> up_values;
+    std::vector<object **> up_values;
     uint64_t ip;
 
     function_object();

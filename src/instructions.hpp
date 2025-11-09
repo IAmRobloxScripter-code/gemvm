@@ -42,5 +42,7 @@ enum class instructions : uint8_t
     halt,
     
     close,
-    skip
+    skip,
+    store_upvalue,
+    load_upvalue
 };

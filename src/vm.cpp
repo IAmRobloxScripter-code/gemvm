@@ -3,7 +3,7 @@
 #include <fstream>
 
 void GEM_VIRTUAL_MACHINE::exit_handler(uint8_t exit_code)
-{   
+{
     for (object *obj : this->object_stack)
     {
         obj->print();
@@ -53,6 +53,7 @@ void GEM_VIRTUAL_MACHINE::execute()
     while (!this->halted && this->ip < program_size)
     {
         instructions instruction = static_cast<instructions>(this->read<uint8_t>());
+        // std::cout << (int)instruction << std::endl;
         switch (instruction)
         {
         case instructions::make_constant:
@@ -106,10 +107,11 @@ void GEM_VIRTUAL_MACHINE::execute()
                 this->exit_handler(1);
                 break;
             }
-            object *constant = this->constants[constant_id]->copy();
+            object *constant = this->constants[constant_id];
 
             this->object_stack.push_back(constant);
             object_heap.push_back(constant);
+            tick_gc();
             break;
         }
         case instructions::make_frame:
@@ -120,13 +122,14 @@ void GEM_VIRTUAL_MACHINE::execute()
             stack_frame *frame = new stack_frame;
             frame->scope_type = scope_type;
 
-            for (uint8_t up_value_index = 0; up_value_index < up_value_count; ++up_value_count)
+            for (uint8_t up_value_index = 0; up_value_index < up_value_count; ++up_value_index)
             {
-                frame->up_values.push_back(parent->local_values[this->read<uint8_t>()]);
+                frame->up_values.push_back(&parent->local_values[this->read<uint8_t>()]);
             }
 
             this->stack_frame_stack.push_back(frame);
             stack_frame_heap.push_back(frame);
+            tick_gc();
 
             if (this->stack_frame_stack.size() > call_stack_limit)
             {
@@ -158,6 +161,17 @@ void GEM_VIRTUAL_MACHINE::execute()
         case instructions::load_local:
             this->object_stack.push_back(this->get_current_frame()->local_values[this->read<uint8_t>()]);
             break;
+        case instructions::store_upvalue:
+        {
+            object *value = this->pop();
+            uint8_t id = this->read<uint8_t>();
+            stack_frame *frame = this->get_current_frame();
+            *frame->up_values[id] = value;
+            break;
+        }
+        case instructions::load_upvalue:
+            this->object_stack.push_back(*(this->get_current_frame()->up_values[this->read<uint8_t>()]));
+            break;
         case instructions::add:
         {
             object *y = this->pop();
@@ -166,6 +180,7 @@ void GEM_VIRTUAL_MACHINE::execute()
             object *result = x->add(y);
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
             break;
         }
         case instructions::sub:
@@ -176,6 +191,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             object *result = x->sub(y);
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::mul:
@@ -186,6 +203,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             object *result = x->mul(y);
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::div:
@@ -196,6 +215,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             object *result = x->div(y);
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::pow:
@@ -206,6 +227,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             object *result = x->powr(y);
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::mod:
@@ -216,6 +239,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             object *result = x->modl(y);
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
 
@@ -228,6 +253,7 @@ void GEM_VIRTUAL_MACHINE::execute()
         {
             boolean_object *truthy = static_cast<boolean_object *>(this->pop());
             uint64_t jmp_ip = this->read<uint64_t>();
+
             if (truthy->value == true)
             {
                 this->ip = jmp_ip;
@@ -252,6 +278,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->cmp_eq(y));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::cmp_neq:
@@ -262,6 +290,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->cmp_neq(y));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::cmp_gt:
@@ -272,6 +302,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->cmp_gt(y));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::cmp_lt:
@@ -282,6 +314,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->cmp_lt(y));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::cmp_gte:
@@ -292,6 +326,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->cmp_gte(y));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::cmp_lte:
@@ -302,6 +338,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->cmp_lte(y));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::unary_not:
@@ -311,6 +349,8 @@ void GEM_VIRTUAL_MACHINE::execute()
             boolean_object *result = static_cast<boolean_object *>(x->unary_not(nullptr));
             this->object_stack.push_back(result);
             object_heap.push_back(result);
+            tick_gc();
+
             break;
         }
         case instructions::ret:
@@ -333,8 +373,6 @@ void GEM_VIRTUAL_MACHINE::execute()
             };
             if (this->get_current_frame()->scope_type != block_type::global)
                 this->stack_frame_stack.pop_back();
-
-            this->stack_frame_stack.pop_back();
             break;
         }
         case instructions::skip:
@@ -346,7 +384,7 @@ void GEM_VIRTUAL_MACHINE::execute()
             break;
         };
         case instructions::halt:
-        {   
+        {
             this->halted = true;
             break;
         }
@@ -356,6 +394,80 @@ void GEM_VIRTUAL_MACHINE::execute()
             break;
         }
     }
+}
+
+void GEM_VIRTUAL_MACHINE::tick_gc()
+{
+    this->allocations++;
+    if (this->allocations >= gc_trigger_allocation_count)
+    {
+        this->allocations = 0;
+        this->garbage_collect();
+    }
+}
+
+void GEM_VIRTUAL_MACHINE::garbage_collect()
+{   
+    for (stack_frame *frame : this->stack_frame_stack)
+    {
+        frame->marked = true;
+        for (object *obj : frame->local_values)
+            obj->mark();
+        for (object **obj : frame->up_values)
+            (*obj)->mark();
+    }
+
+    for (object *obj : this->object_stack)
+        obj->mark();
+
+    std::vector<stack_frame *> new_stack_frame_heap;
+    for (stack_frame *frame : this->stack_frame_stack)
+    {
+        if (!frame->marked)
+        {
+            delete frame;
+        }
+        else
+        {
+            new_stack_frame_heap.push_back(frame);
+        }
+    }
+
+    std::vector<object *> new_obj_heap;
+    for (object *obj : object_heap)
+    {
+        if (!obj->marked)
+        {
+            obj->free();
+            switch (obj->value_type)
+            {
+            case value_types::number:
+                delete static_cast<number_object *>(obj);
+                break;
+            case value_types::string:
+                delete static_cast<string_object *>(obj);
+                break;
+            case value_types::boolean:
+                delete static_cast<boolean_object *>(obj);
+                break;
+            case value_types::function:
+                delete static_cast<function_object *>(obj);
+                break;
+            case value_types::null:
+                delete static_cast<null_object *>(obj);
+                break;
+            default:
+                delete obj;
+            }
+        }
+        else
+        {
+            obj->marked = false;
+            new_obj_heap.push_back(obj);
+        }
+    }
+
+    object_heap = new_obj_heap;
 }
 
 int main(int argc, char *argv[])
@@ -371,7 +483,7 @@ int main(int argc, char *argv[])
 
     GEM_VIRTUAL_MACHINE *vm = new GEM_VIRTUAL_MACHINE;
     vm->bytes = buffer;
-    stack_frame* global = new stack_frame;
+    stack_frame *global = new stack_frame;
     global->scope_type = block_type::global;
     vm->stack_frame_stack.push_back(global);
     vm->execute();

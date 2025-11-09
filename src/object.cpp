@@ -278,17 +278,16 @@ object *function_object::cmp_lte(object *other) { return nullptr; };
 object *function_object::unary_not(object *other) { return nullptr; };
 
 void object::free() {};
-void object::mark() {};
+void object::mark() { this->marked = true; };
 
-void number_object::free() { delete this; };
+void number_object::free() {};
 void string_object::free()
 {
     this->value.~basic_string();
-    delete this;
 };
-void boolean_object::free() { delete this; };
-void null_object::free() { delete this; };
-void function_object::free() { delete this; };
+void boolean_object::free() {};
+void null_object::free() {};
+void function_object::free() {};
 
 void number_object::mark() { this->marked = true; };
 void string_object::mark() { this->marked = true; };

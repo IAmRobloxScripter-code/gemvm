@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 4.0.0)
 
 project(GVM CXX)
-
 set(CMAKE_CXX_STANDARD 20)
-
-add_compile_options(-O3)
+add_compile_options(-O3 -g0)
 
 set(LIB_HEADER_FILES
 	./genlib.hpp

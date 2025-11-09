@@ -67,7 +67,9 @@ enum class instructions : uint8_t
     halt,
 
     close,
-    skip
+    skip,
+    store_upvalue,
+    load_upvalue
 };
 
 struct label_cache_child
@@ -290,5 +292,15 @@ public:
     void write_skip()
     {
         this->write<uint8_t>(to_uint8(instructions::skip));
+    };
+    void write_store_upvalue(uint8_t upvalue)
+    {
+        this->write<uint8_t>(to_uint8(instructions::store_upvalue));
+        this->write<uint8_t>(upvalue);
+    };
+    void write_load_upvalue(uint8_t upvalue)
+    {
+        this->write<uint8_t>(to_uint8(instructions::load_upvalue));
+        this->write<uint8_t>(upvalue);
     };
 };
