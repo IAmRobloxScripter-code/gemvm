@@ -2,8 +2,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: \
  /home/scripting_entity/Desktop/projects/gemvm/src/object.cpp \
  /usr/include/stdc-predef.h \
  /home/scripting_entity/Desktop/projects/gemvm/src/object.hpp \
- /usr/include/c++/15.2.1/string \
- /usr/include/c++/15.2.1/bits/requires_hosted.h \
+ /usr/include/c++/15.2.1/cstdint \
  /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -12,16 +11,22 @@ CMakeFiles/gvm.dir/src/object.cpp.o: \
  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
  /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h \
  /usr/include/c++/15.2.1/pstl/pstl_config.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdint.h \
+ /usr/include/stdint.h /usr/include/bits/libc-header-start.h \
+ /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+ /usr/include/bits/time64.h /usr/include/bits/wchar.h \
+ /usr/include/bits/stdint-intn.h /usr/include/bits/stdint-uintn.h \
+ /usr/include/bits/stdint-least.h /usr/include/c++/15.2.1/string \
+ /usr/include/c++/15.2.1/bits/requires_hosted.h \
  /usr/include/c++/15.2.1/bits/stringfwd.h \
  /usr/include/c++/15.2.1/bits/memoryfwd.h \
  /usr/include/c++/15.2.1/bits/char_traits.h \
  /usr/include/c++/15.2.1/bits/postypes.h /usr/include/c++/15.2.1/cwchar \
- /usr/include/wchar.h /usr/include/bits/libc-header-start.h \
- /usr/include/bits/floatn.h /usr/include/bits/floatn-common.h \
+ /usr/include/wchar.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stddef.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdarg.h \
- /usr/include/bits/wchar.h /usr/include/bits/types/wint_t.h \
- /usr/include/bits/types/mbstate_t.h \
+ /usr/include/bits/types/wint_t.h /usr/include/bits/types/mbstate_t.h \
  /usr/include/bits/types/__mbstate_t.h /usr/include/bits/types/__FILE.h \
  /usr/include/bits/types/FILE.h /usr/include/bits/types/locale_t.h \
  /usr/include/bits/types/__locale_t.h /usr/include/c++/15.2.1/type_traits \
@@ -48,9 +53,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: \
  /usr/include/c++/15.2.1/clocale /usr/include/locale.h \
  /usr/include/bits/locale.h /usr/include/c++/15.2.1/iosfwd \
  /usr/include/c++/15.2.1/cctype /usr/include/ctype.h \
- /usr/include/bits/types.h /usr/include/bits/typesizes.h \
- /usr/include/bits/time64.h /usr/include/bits/endian.h \
- /usr/include/bits/endianness.h \
+ /usr/include/bits/endian.h /usr/include/bits/endianness.h \
  /usr/include/c++/15.2.1/bits/ostream_insert.h \
  /usr/include/c++/15.2.1/bits/cxxabi_forced.h \
  /usr/include/c++/15.2.1/bits/stl_iterator.h \
@@ -82,11 +85,10 @@ CMakeFiles/gvm.dir/src/object.cpp.o: \
  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
  /usr/include/sys/types.h /usr/include/bits/types/clock_t.h \
  /usr/include/bits/types/clockid_t.h /usr/include/bits/types/time_t.h \
- /usr/include/bits/types/timer_t.h /usr/include/bits/stdint-intn.h \
- /usr/include/endian.h /usr/include/bits/byteswap.h \
- /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
- /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
- /usr/include/bits/types/__sigset_t.h \
+ /usr/include/bits/types/timer_t.h /usr/include/endian.h \
+ /usr/include/bits/byteswap.h /usr/include/bits/uintn-identity.h \
+ /usr/include/sys/select.h /usr/include/bits/select.h \
+ /usr/include/bits/types/sigset_t.h /usr/include/bits/types/__sigset_t.h \
  /usr/include/bits/types/struct_timeval.h \
  /usr/include/bits/types/struct_timespec.h \
  /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
@@ -111,14 +113,18 @@ CMakeFiles/gvm.dir/src/object.cpp.o: \
  /usr/include/c++/15.2.1/bits/uses_allocator.h \
  /usr/include/c++/15.2.1/bits/uses_allocator_args.h \
  /usr/include/c++/15.2.1/tuple /usr/include/c++/15.2.1/bits/ranges_util.h \
- /usr/include/c++/15.2.1/vector \
+ /usr/include/c++/15.2.1/unordered_map \
+ /usr/include/c++/15.2.1/bits/unordered_map.h \
+ /usr/include/c++/15.2.1/bits/hashtable.h \
+ /usr/include/c++/15.2.1/bits/hashtable_policy.h \
+ /usr/include/c++/15.2.1/ext/aligned_buffer.h \
+ /usr/include/c++/15.2.1/bits/enable_special_members.h \
+ /usr/include/c++/15.2.1/bits/node_handle.h \
+ /usr/include/c++/15.2.1/bits/erase_if.h /usr/include/c++/15.2.1/vector \
  /usr/include/c++/15.2.1/bits/stl_uninitialized.h \
  /usr/include/c++/15.2.1/bits/stl_vector.h \
  /usr/include/c++/15.2.1/bits/stl_bvector.h \
- /usr/include/c++/15.2.1/bits/vector.tcc /usr/include/c++/15.2.1/cstdint \
- /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
- /usr/include/bits/stdint-least.h /usr/include/c++/15.2.1/cmath \
+ /usr/include/c++/15.2.1/bits/vector.tcc /usr/include/c++/15.2.1/cmath \
  /usr/include/math.h /usr/include/bits/math-vector.h \
  /usr/include/bits/libm-simd-decl-stubs.h \
  /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
@@ -180,4 +186,5 @@ CMakeFiles/gvm.dir/src/object.cpp.o: \
  /usr/include/c++/15.2.1/bits/locale_facets.tcc \
  /usr/include/c++/15.2.1/bits/basic_ios.tcc \
  /usr/include/c++/15.2.1/bits/ostream.tcc /usr/include/c++/15.2.1/istream \
- /usr/include/c++/15.2.1/bits/istream.tcc
+ /usr/include/c++/15.2.1/bits/istream.tcc /usr/include/c++/15.2.1/sstream \
+ /usr/include/c++/15.2.1/bits/sstream.tcc

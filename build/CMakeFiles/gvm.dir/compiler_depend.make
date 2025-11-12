@@ -102,12 +102,16 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/bits/cpp_type_traits.h \
   /usr/include/c++/15.2.1/bits/cxxabi_forced.h \
   /usr/include/c++/15.2.1/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15.2.1/bits/enable_special_members.h \
+  /usr/include/c++/15.2.1/bits/erase_if.h \
   /usr/include/c++/15.2.1/bits/exception.h \
   /usr/include/c++/15.2.1/bits/exception_defines.h \
   /usr/include/c++/15.2.1/bits/exception_ptr.h \
   /usr/include/c++/15.2.1/bits/functexcept.h \
   /usr/include/c++/15.2.1/bits/functional_hash.h \
   /usr/include/c++/15.2.1/bits/hash_bytes.h \
+  /usr/include/c++/15.2.1/bits/hashtable.h \
+  /usr/include/c++/15.2.1/bits/hashtable_policy.h \
   /usr/include/c++/15.2.1/bits/invoke.h \
   /usr/include/c++/15.2.1/bits/ios_base.h \
   /usr/include/c++/15.2.1/bits/istream.tcc \
@@ -123,6 +127,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/bits/move.h \
   /usr/include/c++/15.2.1/bits/nested_exception.h \
   /usr/include/c++/15.2.1/bits/new_allocator.h \
+  /usr/include/c++/15.2.1/bits/node_handle.h \
   /usr/include/c++/15.2.1/bits/ostream.h \
   /usr/include/c++/15.2.1/bits/ostream.tcc \
   /usr/include/c++/15.2.1/bits/ostream_insert.h \
@@ -136,6 +141,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/bits/refwrap.h \
   /usr/include/c++/15.2.1/bits/requires_hosted.h \
   /usr/include/c++/15.2.1/bits/specfun.h \
+  /usr/include/c++/15.2.1/bits/sstream.tcc \
   /usr/include/c++/15.2.1/bits/std_abs.h \
   /usr/include/c++/15.2.1/bits/stl_algobase.h \
   /usr/include/c++/15.2.1/bits/stl_bvector.h \
@@ -151,6 +157,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/15.2.1/bits/string_view.tcc \
   /usr/include/c++/15.2.1/bits/stringfwd.h \
+  /usr/include/c++/15.2.1/bits/unordered_map.h \
   /usr/include/c++/15.2.1/bits/uses_allocator.h \
   /usr/include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/include/c++/15.2.1/bits/utility.h \
@@ -171,6 +178,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/debug/assertions.h \
   /usr/include/c++/15.2.1/debug/debug.h \
   /usr/include/c++/15.2.1/exception \
+  /usr/include/c++/15.2.1/ext/aligned_buffer.h \
   /usr/include/c++/15.2.1/ext/alloc_traits.h \
   /usr/include/c++/15.2.1/ext/atomicity.h \
   /usr/include/c++/15.2.1/ext/numeric_traits.h \
@@ -186,6 +194,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/numbers \
   /usr/include/c++/15.2.1/ostream \
   /usr/include/c++/15.2.1/pstl/pstl_config.h \
+  /usr/include/c++/15.2.1/sstream \
   /usr/include/c++/15.2.1/stdexcept \
   /usr/include/c++/15.2.1/streambuf \
   /usr/include/c++/15.2.1/string \
@@ -206,6 +215,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o: /home/scripting_entity/Desktop/projects/gem
   /usr/include/c++/15.2.1/tuple \
   /usr/include/c++/15.2.1/type_traits \
   /usr/include/c++/15.2.1/typeinfo \
+  /usr/include/c++/15.2.1/unordered_map \
   /usr/include/c++/15.2.1/vector \
   /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
@@ -344,6 +354,8 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: /home/scripting_entity/Desktop/projects/gemvm/s
   /usr/include/c++/15.2.1/bits/cpp_type_traits.h \
   /usr/include/c++/15.2.1/bits/cxxabi_forced.h \
   /usr/include/c++/15.2.1/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15.2.1/bits/enable_special_members.h \
+  /usr/include/c++/15.2.1/bits/erase_if.h \
   /usr/include/c++/15.2.1/bits/exception.h \
   /usr/include/c++/15.2.1/bits/exception_defines.h \
   /usr/include/c++/15.2.1/bits/exception_ptr.h \
@@ -351,6 +363,8 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: /home/scripting_entity/Desktop/projects/gemvm/s
   /usr/include/c++/15.2.1/bits/functexcept.h \
   /usr/include/c++/15.2.1/bits/functional_hash.h \
   /usr/include/c++/15.2.1/bits/hash_bytes.h \
+  /usr/include/c++/15.2.1/bits/hashtable.h \
+  /usr/include/c++/15.2.1/bits/hashtable_policy.h \
   /usr/include/c++/15.2.1/bits/invoke.h \
   /usr/include/c++/15.2.1/bits/ios_base.h \
   /usr/include/c++/15.2.1/bits/istream.tcc \
@@ -366,6 +380,7 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: /home/scripting_entity/Desktop/projects/gemvm/s
   /usr/include/c++/15.2.1/bits/move.h \
   /usr/include/c++/15.2.1/bits/nested_exception.h \
   /usr/include/c++/15.2.1/bits/new_allocator.h \
+  /usr/include/c++/15.2.1/bits/node_handle.h \
   /usr/include/c++/15.2.1/bits/ostream.h \
   /usr/include/c++/15.2.1/bits/ostream.tcc \
   /usr/include/c++/15.2.1/bits/ostream_insert.h \
@@ -393,6 +408,7 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: /home/scripting_entity/Desktop/projects/gemvm/s
   /usr/include/c++/15.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/15.2.1/bits/string_view.tcc \
   /usr/include/c++/15.2.1/bits/stringfwd.h \
+  /usr/include/c++/15.2.1/bits/unordered_map.h \
   /usr/include/c++/15.2.1/bits/uses_allocator.h \
   /usr/include/c++/15.2.1/bits/uses_allocator_args.h \
   /usr/include/c++/15.2.1/bits/utility.h \
@@ -413,6 +429,7 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: /home/scripting_entity/Desktop/projects/gemvm/s
   /usr/include/c++/15.2.1/debug/assertions.h \
   /usr/include/c++/15.2.1/debug/debug.h \
   /usr/include/c++/15.2.1/exception \
+  /usr/include/c++/15.2.1/ext/aligned_buffer.h \
   /usr/include/c++/15.2.1/ext/alloc_traits.h \
   /usr/include/c++/15.2.1/ext/atomicity.h \
   /usr/include/c++/15.2.1/ext/numeric_traits.h \
@@ -436,6 +453,7 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: /home/scripting_entity/Desktop/projects/gemvm/s
   /usr/include/c++/15.2.1/tuple \
   /usr/include/c++/15.2.1/type_traits \
   /usr/include/c++/15.2.1/typeinfo \
+  /usr/include/c++/15.2.1/unordered_map \
   /usr/include/c++/15.2.1/vector \
   /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
   /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
@@ -530,17 +548,29 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/string.h:
 
-/usr/include/c++/15.2.1/bits/postypes.h:
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h:
 
-/usr/include/c++/15.2.1/bits/ostream_insert.h:
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h:
 
-/usr/include/c++/15.2.1/bits/ptr_traits.h:
+/usr/include/c++/15.2.1/fstream:
 
-/usr/include/c++/15.2.1/bits/ostream.h:
+/usr/include/c++/15.2.1/cstring:
+
+/usr/include/c++/15.2.1/bits/codecvt.h:
+
+/home/scripting_entity/Desktop/projects/gemvm/src/vm.hpp:
+
+/home/scripting_entity/Desktop/projects/gemvm/src/stack_frame.hpp:
+
+/home/scripting_entity/Desktop/projects/gemvm/src/instructions.hpp:
+
+/home/scripting_entity/Desktop/projects/gemvm/src/vm.cpp:
+
+/usr/include/c++/15.2.1/bits/refwrap.h:
+
+/usr/include/c++/15.2.1/unordered_map:
 
 /usr/include/c++/15.2.1/bits/nested_exception.h:
-
-/usr/include/c++/15.2.1/bits/stringfwd.h:
 
 /usr/include/c++/15.2.1/bits/memoryfwd.h:
 
@@ -548,11 +578,11 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/c++/15.2.1/cwchar:
 
-/usr/include/c++/15.2.1/bits/locale_facets.h:
-
-/usr/include/c++/15.2.1/ext/string_conversions.h:
-
 /usr/include/c++/15.2.1/cstdio:
+
+/usr/include/math.h:
+
+/usr/include/c++/15.2.1/bits/invoke.h:
 
 /usr/include/bits/endian.h:
 
@@ -560,13 +590,19 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/c++/15.2.1/bits/exception_ptr.h:
 
-/home/scripting_entity/Desktop/projects/gemvm/src/vm.hpp:
+/usr/include/c++/15.2.1/bits/locale_facets.h:
+
+/usr/include/c++/15.2.1/ext/string_conversions.h:
 
 /usr/include/c++/15.2.1/bits/cxxabi_init_exception.h:
 
 /usr/include/c++/15.2.1/bits/concept_check.h:
 
 /usr/include/c++/15.2.1/bits/memory_resource.h:
+
+/usr/include/c++/15.2.1/bits/fstream.tcc:
+
+/usr/include/time.h:
 
 /usr/include/c++/15.2.1/bits/basic_ios.tcc:
 
@@ -596,6 +632,12 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/c++/15.2.1/bits/stl_iterator_base_funcs.h:
 
+/usr/include/c++/15.2.1/bits/stringfwd.h:
+
+/usr/include/c++/15.2.1/bits/enable_special_members.h:
+
+/usr/include/c++/15.2.1/stdexcept:
+
 /usr/include/c++/15.2.1/cctype:
 
 /usr/include/c++/15.2.1/backward/binders.h:
@@ -611,6 +653,10 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 /usr/include/c++/15.2.1/ext/atomicity.h:
 
 /usr/include/bits/types/struct_timespec.h:
+
+/usr/include/c++/15.2.1/vector:
+
+/usr/include/c++/15.2.1/bits/exception_defines.h:
 
 /usr/include/bits/waitflags.h:
 
@@ -630,10 +676,6 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/bits/struct_rwlock.h:
 
-/usr/include/alloca.h:
-
-/usr/include/c++/15.2.1/bits/locale_classes.h:
-
 /usr/include/bits/types/sigset_t.h:
 
 /usr/include/bits/types/mbstate_t.h:
@@ -647,6 +689,8 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 /usr/include/bits/stdio_lim.h:
 
 /usr/include/bits/types/__locale_t.h:
+
+/usr/include/c++/15.2.1/bits/sstream.tcc:
 
 /usr/include/bits/libc-header-start.h:
 
@@ -666,9 +710,9 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /home/scripting_entity/Desktop/projects/gemvm/src/object.hpp:
 
-/usr/include/c++/15.2.1/bits/basic_string.tcc:
+/usr/include/c++/15.2.1/bits/node_handle.h:
 
-/home/scripting_entity/Desktop/projects/gemvm/src/stack_frame.hpp:
+/usr/include/c++/15.2.1/bits/basic_string.tcc:
 
 /usr/include/bits/uintn-identity.h:
 
@@ -678,17 +722,17 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h:
 
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/error_constants.h:
+/usr/include/c++/15.2.1/bits/hashtable_policy.h:
+
+/usr/include/c++/15.2.1/bits/streambuf.tcc:
+
+/usr/include/bits/cpu-set.h:
 
 /usr/include/c++/15.2.1/bits/cpp_type_traits.h:
 
-/usr/include/time.h:
-
-/usr/include/c++/15.2.1/bits/fstream.tcc:
+/usr/include/c++/15.2.1/bits/istream.tcc:
 
 /usr/include/c++/15.2.1/limits:
-
-/usr/include/c++/15.2.1/bits/istream.tcc:
 
 /usr/include/c++/15.2.1/bits/stl_construct.h:
 
@@ -712,7 +756,15 @@ CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 /usr/include/bits/iscanonical.h:
 
+/usr/include/c++/15.2.1/bits/locale_classes.h:
+
+/usr/include/alloca.h:
+
+/usr/include/c++/15.2.1/bits/ostream.h:
+
 /usr/include/bits/stdint-least.h:
+
+/usr/include/c++/15.2.1/bits/erase_if.h:
 
 /usr/include/bits/fp-logb.h:
 
@@ -742,8 +794,6 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 
 /usr/include/asm/posix_types_64.h:
 
-/usr/include/c++/15.2.1/fstream:
-
 /usr/include/bits/time.h:
 
 /usr/include/asm/posix_types.h:
@@ -763,6 +813,8 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 /usr/include/c++/15.2.1/tr1/poly_laguerre.tcc:
 
 /usr/include/stdc-predef.h:
+
+/usr/include/c++/15.2.1/bits/hashtable.h:
 
 /usr/include/bits/floatn.h:
 
@@ -846,21 +898,19 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 
 /usr/include/bits/types/__FILE.h:
 
+/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/error_constants.h:
+
+/usr/include/c++/15.2.1/bits/ostream_insert.h:
+
+/usr/include/c++/15.2.1/bits/ptr_traits.h:
+
+/usr/include/c++/15.2.1/bits/postypes.h:
+
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h:
 
 /usr/include/c++/15.2.1/bits/range_access.h:
 
 /usr/include/c++/15.2.1/bits/ranges_base.h:
-
-/usr/include/c++/15.2.1/bits/refwrap.h:
-
-/usr/include/bits/cpu-set.h:
-
-/usr/include/c++/15.2.1/bits/streambuf.tcc:
-
-/usr/include/c++/15.2.1/bits/invoke.h:
-
-/usr/include/math.h:
 
 /usr/include/c++/15.2.1/bits/specfun.h:
 
@@ -902,6 +952,8 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 
 /usr/include/locale.h:
 
+/usr/include/c++/15.2.1/bits/unordered_map.h:
+
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/cpu_defines.h:
 
 /usr/include/c++/15.2.1/bits/uses_allocator.h:
@@ -938,6 +990,8 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 
 /usr/include/c++/15.2.1/istream:
 
+/usr/include/c++/15.2.1/ext/aligned_buffer.h:
+
 /usr/include/c++/15.2.1/ext/alloc_traits.h:
 
 /usr/include/c++/15.2.1/ext/numeric_traits.h:
@@ -956,11 +1010,7 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 
 /usr/include/c++/15.2.1/iostream:
 
-/usr/include/c++/15.2.1/stdexcept:
-
-/usr/include/c++/15.2.1/bits/exception_defines.h:
-
-/usr/include/c++/15.2.1/vector:
+/usr/include/c++/15.2.1/sstream:
 
 /usr/include/c++/15.2.1/string:
 
@@ -969,8 +1019,6 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 /usr/include/c++/15.2.1/string_view:
 
 /usr/include/c++/15.2.1/tr1/bessel_function.tcc:
-
-/home/scripting_entity/Desktop/projects/gemvm/src/instructions.hpp:
 
 /usr/include/c++/15.2.1/tr1/exp_integral.tcc:
 
@@ -995,8 +1043,6 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 /usr/include/bits/types/__sigset_t.h:
 
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++config.h:
-
-/home/scripting_entity/Desktop/projects/gemvm/src/vm.cpp:
 
 /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++locale.h:
 
@@ -1047,11 +1093,3 @@ CMakeFiles/gvm.dir/src/object.cpp.o:
 /usr/include/sys/single_threaded.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/include/stdint.h:
-
-/usr/include/c++/15.2.1/bits/codecvt.h:
-
-/usr/include/c++/15.2.1/cstring:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h:
-
-/usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h:
