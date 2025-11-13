@@ -289,11 +289,7 @@ object* null_object::copy() {
   return obj;
 }
 object* function_object::copy() {
-  function_object* obj = new function_object();
-  obj->value_type = this->value_type;
-  obj->ip = this->ip;
-  obj->up_values = this->up_values;
-  return obj;
+  return nullptr;
 }
 
 object* table_object::copy() {

@@ -4,6 +4,7 @@ gvm: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o \
   CMakeFiles/gvm.dir/src/vm.cpp.o \
   CMakeFiles/gvm.dir/src/object.cpp.o \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libffi.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libm.so \
@@ -41,6 +42,8 @@ gvm: \
 CMakeFiles/gvm.dir/src/vm.cpp.o:
 
 CMakeFiles/gvm.dir/src/object.cpp.o:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libffi.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libstdc++.so:
 

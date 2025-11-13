@@ -1,5 +1,6 @@
 #include "vm.hpp"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -351,18 +352,22 @@ void GEM_VIRTUAL_MACHINE::execute() {
         uint64_t ip = this->read<uint64_t>();
         uint8_t up_values = this->read<uint8_t>();
         function_object* function = new function_object;
+        gem_function* gem_function_value = new gem_function;
+        gem_function_value->ip = ip;
         function->value_type = value_types::function;
-        function->ip = ip;
+        function->function_type = function_types::gem_function;
+        function->gem_function_value = gem_function_value;
+
         stack_frame* frame = this->get_current_frame();
 
         for (uint8_t up_value_index = 0; up_value_index < up_values;
              ++up_value_index) {
           bool is_local = this->read<uint8_t>();
           if (is_local) {
-            function->up_values.push_back(
+            gem_function_value->up_values.push_back(
                 &frame->local_values[this->read<uint8_t>()]);
           } else {
-            function->up_values.push_back(
+            gem_function_value->up_values.push_back(
                 frame->up_values[this->read<uint8_t>()]);
           }
         }
@@ -374,15 +379,37 @@ void GEM_VIRTUAL_MACHINE::execute() {
       }
       case instructions::call: {
         function_object* function = static_cast<function_object*>(this->pop());
-        stack_frame* frame = new stack_frame;
-        frame->scope_type = block_type::function;
-        frame->up_values = function->up_values;
-        this->stack_frame_stack.push_back(frame);
-        stack_frame_heap.push_back(frame);
-        this->tick_gc();
+        switch (function->function_type) {
+          case function_types::gem_function: {
+            stack_frame* frame = new stack_frame;
+            frame->scope_type = block_type::function;
+            frame->up_values = function->gem_function_value->up_values;
+            this->stack_frame_stack.push_back(frame);
+            stack_frame_heap.push_back(frame);
+            this->tick_gc();
 
-        this->return_ip_stack.push_back(this->ip);
-        this->ip = function->ip;
+            this->return_ip_stack.push_back(this->ip);
+            this->ip = function->gem_function_value->ip;
+            break;
+          }
+          case function_types::native_function: {
+            std::vector<object*> args;
+
+            for (uint8_t index = 0;
+                 index < function->native_function_value->args; ++index) {
+              args.push_back(this->pop());
+            }
+
+            std::reverse(args.begin(), args.end());
+            object* result = function->native_function_value->ptr(args);
+            this->object_stack.push_back(result);
+            object_heap.push_back(result);
+            this->tick_gc();
+            break;
+          };
+          default:
+            break;
+        }
         break;
       }
       case instructions::halt: {
@@ -420,19 +447,19 @@ void GEM_VIRTUAL_MACHINE::execute() {
         break;
       }
       case instructions::store_hash: {
-         object* value = this->pop();
-         object* key = this->pop();
-         table_object* table_obj = static_cast<table_object*>(this->pop());
-         
-         table_obj->value->dictionary[key->hash()] = value;
-         break;
+        object* value = this->pop();
+        object* key = this->pop();
+        table_object* table_obj = static_cast<table_object*>(this->pop());
+
+        table_obj->value->dictionary[key->hash()] = value;
+        break;
       }
       case instructions::get_hash: {
-         object* key = this->pop();
-         table_object* table_obj = static_cast<table_object*>(this->pop());
-         
-         this->object_stack.push_back(table_obj->value->dictionary[key->hash()]);
-         break;
+        object* key = this->pop();
+        table_object* table_obj = static_cast<table_object*>(this->pop());
+
+        this->object_stack.push_back(table_obj->value->dictionary[key->hash()]);
+        break;
       }
       default:
         std::cerr << "Invalid instruction!\n";

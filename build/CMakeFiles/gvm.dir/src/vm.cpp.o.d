@@ -171,8 +171,18 @@ CMakeFiles/gvm.dir/src/vm.cpp.o: \
  /usr/include/c++/15.2.1/bits/stl_uninitialized.h \
  /usr/include/c++/15.2.1/bits/stl_vector.h \
  /usr/include/c++/15.2.1/bits/stl_bvector.h \
- /usr/include/c++/15.2.1/bits/vector.tcc /usr/include/c++/15.2.1/fstream \
- /usr/include/c++/15.2.1/bits/codecvt.h \
+ /usr/include/c++/15.2.1/bits/vector.tcc \
+ /usr/include/c++/15.2.1/algorithm \
+ /usr/include/c++/15.2.1/bits/stl_algo.h \
+ /usr/include/c++/15.2.1/bits/algorithmfwd.h \
+ /usr/include/c++/15.2.1/bits/stl_heap.h \
+ /usr/include/c++/15.2.1/bits/uniform_int_dist.h \
+ /usr/include/c++/15.2.1/bits/stl_tempbuf.h \
+ /usr/include/c++/15.2.1/bits/ranges_algo.h \
+ /usr/include/c++/15.2.1/bits/ranges_algobase.h \
+ /usr/include/c++/15.2.1/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/15.2.1/pstl/execution_defs.h \
+ /usr/include/c++/15.2.1/fstream /usr/include/c++/15.2.1/bits/codecvt.h \
  /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/include/c++/15.2.1/bits/fstream.tcc

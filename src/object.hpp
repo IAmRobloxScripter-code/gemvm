@@ -140,9 +140,30 @@ struct null_object : public object {
   virtual object* copy();
 };
 
-struct function_object : public object {
+enum class function_types {
+  gem_function,
+  c_function,
+  native_function,
+};
+
+typedef object* (*native_function_ptr)(std::vector<object*> args);
+
+struct native_function {
+  uint8_t args;
+  native_function_ptr ptr;
+};
+
+struct gem_function {
   std::vector<object**> up_values;
   uint64_t ip;
+};
+
+struct function_object : public object {
+  function_types function_type;
+  union {
+    gem_function* gem_function_value;
+    native_function* native_function_value;
+  };
 
   function_object();
 
