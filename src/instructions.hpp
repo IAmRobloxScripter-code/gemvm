@@ -50,4 +50,8 @@ enum class instructions : uint8_t {
   get_hash,
   store_array,
   store_hash,
+  load_global,
+  define_class,
+  get_attr,
+  store_method
 };

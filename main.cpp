@@ -19,16 +19,28 @@ int main() {
   bytes.write_make_constant<std::string>(value_types::string, std::string("foo"));
   bytes.write_make_constant<double>(value_types::number, 100);
 
-  bytes.write_new_table();
+  bytes.write_jmp("foo_end");
+  bytes.write_label("foo");
   bytes.write_store_local(0);
+  bytes.write_add();
+  bytes.write_ret();
+  bytes.write_label("foo_end");
+
+  bytes.write_define_class();
+  bytes.write_load_constant(0);
+  bytes.write_make_function("foo", std::vector<uint8_t>());
+  bytes.write_store_method();
+  bytes.write_store_local(0);
+
+  bytes.write_load_constant(1);
+  bytes.write_load_constant(1);
   bytes.write_load_local(0);
   bytes.write_load_constant(0);
-  bytes.write_load_constant(1);
-  bytes.write_store_hash();
-
+  bytes.write_get_attr();
   bytes.write_load_local(0);
   bytes.write_load_constant(0);
   bytes.write_get_hash();
+  bytes.write_call();
 
   bytes.write_halt();
   bytes.process_bytecode();

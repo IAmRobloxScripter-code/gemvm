@@ -53,7 +53,7 @@ c_object* cpp_c_convert(object* obj_ptr) {
       }
       break;
     }
-    case c_function_type:
+    case c_function_type: {
       c_function* function = c_new(c_function, 1);
       function_object* cpp_function = static_cast<function_object*>(obj_ptr);
 
@@ -67,6 +67,8 @@ c_object* cpp_c_convert(object* obj_ptr) {
           function->function_type = c_c_function_type;
           break;
         case function_types::native_function:
+          function->function.native_function =
+              cpp_function->native_function_value;
           function->function_type = c_native_function_type;
           break;
         default:
@@ -74,8 +76,70 @@ c_object* cpp_c_convert(object* obj_ptr) {
           break;
       }
 
+      c_obj_ptr->value.function = function;
       break;
+    }
     default:
       break;
+  }
+  return c_obj_ptr;
+}
+
+object* c_cpp_convert(c_object* c_obj_ptr) {
+  switch (c_obj_ptr->value_type) {
+    case c_number_type: {
+      number_object* number_obj_ptr =
+          new number_object(c_obj_ptr->value.number);
+      number_obj_ptr->value_type = value_types::number;
+
+      free(c_obj_ptr);
+      return number_obj_ptr;
+    }
+    case c_string_type: {
+      string_object* string_obj_ptr =
+          new string_object(std::string(c_obj_ptr->value.string));
+      string_obj_ptr->value_type = value_types::string;
+
+      free(c_obj_ptr);
+      return string_obj_ptr;
+    }
+    case c_boolean_type: {
+      boolean_object* boolean_obj_ptr =
+          new boolean_object(c_obj_ptr->value.boolean);
+      boolean_obj_ptr->value_type = value_types::boolean;
+
+      free(c_obj_ptr);
+      return boolean_obj_ptr;
+    }
+    case c_table_type: {
+      table* table_ptr = new table;
+
+      for (uint64_t index = 0; index < c_obj_ptr->value.table->array_size;
+           ++index) {
+        table_ptr->array.push_back(
+            c_cpp_convert(c_obj_ptr->value.table->array[index]));
+      }
+
+      for (uint64_t index = 0; index < c_obj_ptr->value.table->dictionary_size;
+           ++index) {
+        table_ptr->dictionary[std::string(
+            c_obj_ptr->value.table->dictionary[index].key)] =
+            c_cpp_convert(c_obj_ptr->value.table->dictionary[index].value);
+      }
+
+      table_object* table_obj_ptr = new table_object(table_ptr);
+      table_obj_ptr->value_type = value_types::table;
+
+      free(c_obj_ptr->value.table);
+      free(c_obj_ptr);
+      return table_obj_ptr;
+    }
+    default: {
+      null_object* null_obj_ptr = new null_object();
+      null_obj_ptr->value_type = value_types::null;
+
+      free(c_obj_ptr);
+      return null_obj_ptr;
+    }
   }
 }

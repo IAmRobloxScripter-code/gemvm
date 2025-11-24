@@ -1,8 +1,18 @@
 #include "object.hpp"
-
 #include <cmath>
 #include <iostream>
 #include <sstream>
+
+function_object* make_native(native_function_ptr* ptr, uint8_t argc) {
+  function_object* obj = new function_object();
+  obj->function_type = function_types::native_function;
+  native_function* native_func_obj = new native_function();
+  native_func_obj->ptr = *ptr;
+  native_func_obj->args = argc;
+  obj->native_function_value = native_func_obj;
+
+  return obj;
+}
 
 number_object::number_object(double value) { this->value = value; }
 string_object::string_object(std::string value) { this->value = value; }
@@ -10,6 +20,7 @@ boolean_object::boolean_object(bool value) { this->value = value; }
 null_object::null_object() = default;
 function_object::function_object() = default;
 table_object::table_object(table* value) { this->value = value; }
+// ffi_object::ffi_object() = default;
 
 object* object::add(object* other) { return nullptr; };
 object* object::sub(object* other) { return nullptr; };
@@ -124,15 +135,10 @@ object* string_object::add(object* other) {
 }
 
 object* string_object::sub(object* other) { return nullptr; }
-
 object* string_object::mul(object* other) { return nullptr; }
-
 object* string_object::div(object* other) { return nullptr; }
-
 object* string_object::powr(object* other) { return nullptr; }
-
 object* string_object::modl(object* other) { return nullptr; }
-
 object* string_object::cmp_eq(object* other) {
   bool value = this->value == static_cast<string_object*>(other)->value;
   boolean_object* result = new boolean_object(value);
@@ -148,11 +154,8 @@ object* string_object::cmp_neq(object* other) {
 }
 
 object* string_object::cmp_gt(object* other) { return nullptr; }
-
 object* string_object::cmp_lt(object* other) { return nullptr; }
-
 object* string_object::cmp_gte(object* other) { return nullptr; }
-
 object* string_object::cmp_lte(object* other) { return nullptr; }
 
 object* string_object::unary_not(object* other) {
@@ -235,6 +238,20 @@ object* table_object::cmp_gte(object* other) { return nullptr; };
 object* table_object::cmp_lte(object* other) { return nullptr; };
 object* table_object::unary_not(object* other) { return nullptr; };
 
+// object* ffi_object::add(object* other) { return nullptr; };
+// object* ffi_object::sub(object* other) { return nullptr; };
+// object* ffi_object::mul(object* other) { return nullptr; };
+// object* ffi_object::div(object* other) { return nullptr; };
+// object* ffi_object::powr(object* other) { return nullptr; };
+// object* ffi_object::modl(object* other) { return nullptr; };
+// object* ffi_object::cmp_eq(object* other) { return nullptr; };
+// object* ffi_object::cmp_neq(object* other) { return nullptr; };
+// object* ffi_object::cmp_gt(object* other) { return nullptr; };
+// object* ffi_object::cmp_lt(object* other) { return nullptr; };
+// object* ffi_object::cmp_gte(object* other) { return nullptr; };
+// object* ffi_object::cmp_lte(object* other) { return nullptr; };
+// object* ffi_object::unary_not(object* other) { return nullptr; };
+
 void object::free() {};
 void number_object::free() {};
 void string_object::free() { this->value.~basic_string(); };
@@ -242,19 +259,36 @@ void boolean_object::free() {};
 void null_object::free() {};
 void function_object::free() {};
 void table_object::free() { delete this->value; };
+// void ffi_object::free() {};
+void class_object::free() {};
 
 void object::mark() { this->marked = true; };
 void number_object::mark() { this->marked = true; };
 void string_object::mark() { this->marked = true; };
 void boolean_object::mark() { this->marked = true; };
 void null_object::mark() { this->marked = true; };
-void function_object::mark() { this->marked = true; };
+void function_object::mark() {
+  this->marked = true;
+
+  if (this->function_type == function_types::gem_function)
+    for (object** up_value : this->gem_function_value->up_values)
+      (*up_value)->mark();
+};
 void table_object::mark() {
   for (object* arr_object : this->value->array) arr_object->mark();
   for (auto dict_object : this->value->dictionary) dict_object.second->mark();
   this->marked = true;
 };
-
+// void ffi_object::mark() {
+//   this->marked = true;
+//   for (object* ffi_object : this->value) ffi_object->mark();
+// };
+void class_object::mark() {
+  this->marked = true;
+  for (auto fn_obj : this->methods) {
+    fn_obj.second->mark();
+  }
+}
 void object::print() { std::cout << "object" << std::endl; };
 void number_object::print() { std::cout << this->value << std::endl; };
 void string_object::print() { std::cout << this->value << std::endl; };
@@ -266,6 +300,9 @@ void function_object::print() {
 void table_object::print() {
   std::cout << "<table: " << this << ">" << std::endl;
 };
+// void ffi_object::print() {
+//   std::cout << "<ffi_object: " << this << ">" << std::endl;
+// };
 
 object* object::copy() { return nullptr; };
 object* number_object::copy() {
@@ -288,9 +325,8 @@ object* null_object::copy() {
   obj->value_type = this->value_type;
   return obj;
 }
-object* function_object::copy() {
-  return nullptr;
-}
+object* function_object::copy() { return nullptr; }
+// object* ffi_object::copy() { return nullptr; }
 
 object* table_object::copy() {
   table* new_value = new table(*this->value);
@@ -304,7 +340,6 @@ std::string object::hash() {
   hashed << this;
   return hashed.str();
 }
-
 std::string number_object::hash() { return "n_" + std::to_string(this->value); }
 std::string string_object::hash() { return "s_" + this->value; }
 std::string boolean_object::hash() {
@@ -312,12 +347,24 @@ std::string boolean_object::hash() {
 }
 std::string null_object::hash() { return "n_null"; }
 std::string function_object::hash() {
-  std::stringstream hashed;
-  hashed << "f_" << this;
-  return hashed.str();
+  return "f_" + std::to_string(reinterpret_cast<uintptr_t>(this));
 }
 std::string table_object::hash() {
-  std::stringstream hashed;
-  hashed << "t_" << this;
-  return hashed.str();
+  return "t_" + std::to_string(reinterpret_cast<uintptr_t>(this));
+}
+// std::string ffi_object::hash() {
+//   std::stringstream hashed;
+//   hashed << "i_" << this;
+//   return hashed.str();
+// }
+class_object::class_object() {
+  this->methods["__getmember"] = make_native(&__getmember_class_method, 2);
+};
+
+std::string class_object::hash() {
+    return "c_" + std::to_string(reinterpret_cast<uintptr_t>(this));
+}
+
+object* __getmember_class_method(std::vector<object*> args, void* vm_ptr) {
+  return args[0]->methods[static_cast<string_object*>(args[1])->value];
 }

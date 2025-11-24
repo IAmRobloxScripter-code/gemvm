@@ -75,6 +75,10 @@ enum class instructions : uint8_t {
   get_hash,
   store_array,
   store_hash,
+  load_global,
+  define_class,
+  get_attr,
+  store_method
 };
 
 struct label_cache_child {
@@ -243,5 +247,18 @@ class bytecode {
   };
   void write_get_hash() {
     this->write<uint8_t>(to_uint8(instructions::get_hash));
+  };
+  void write_load_global(uint8_t global) {
+    this->write<uint8_t>(to_uint8(instructions::load_global));
+    this->write<uint8_t>(global);
+  };
+  void write_define_class() {
+    this->write<uint8_t>(to_uint8(instructions::define_class));
+  };
+  void write_get_attr() {
+    this->write<uint8_t>(to_uint8(instructions::get_attr));
+  };
+  void write_store_method() {
+    this->write<uint8_t>(to_uint8(instructions::store_method));
   };
 };

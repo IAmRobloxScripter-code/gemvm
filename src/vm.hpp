@@ -20,6 +20,7 @@ class GEM_VIRTUAL_MACHINE {
   std::vector<stack_frame*> stack_frame_stack;
   std::vector<uint64_t> return_ip_stack;
   std::vector<object*> constants;
+  std::vector<object*> globals;
   uint64_t ip = 0;
   bool halted = false;
   uint64_t allocations = 0;
@@ -45,6 +46,7 @@ class GEM_VIRTUAL_MACHINE {
     }
     return this->stack_frame_stack.back();
   };
+  void call_function();
   template <typename T>
   T read() {
     T value;
