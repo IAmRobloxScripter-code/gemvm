@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/gvm.dir/link.d"
+  "CMakeFiles/gvm.dir/src/natives.cpp.o"
+  "CMakeFiles/gvm.dir/src/natives.cpp.o.d"
   "CMakeFiles/gvm.dir/src/object.cpp.o"
   "CMakeFiles/gvm.dir/src/object.cpp.o.d"
   "CMakeFiles/gvm.dir/src/vm.cpp.o"

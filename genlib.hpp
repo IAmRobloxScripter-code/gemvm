@@ -78,7 +78,9 @@ enum class instructions : uint8_t {
   load_global,
   define_class,
   get_attr,
-  store_method
+  store_method,
+  print_str,
+  pop
 };
 
 struct label_cache_child {
@@ -261,4 +263,10 @@ class bytecode {
   void write_store_method() {
     this->write<uint8_t>(to_uint8(instructions::store_method));
   };
+  void write_print_str(std::string value) {
+    this->write<uint8_t>(to_uint8(instructions::print_str));
+    for (char c : value) this->write<char>(c);
+    this->write<uint8_t>(0);
+  };
+  void write_pop() { this->write<uint8_t>(to_uint8(instructions::pop)); };
 };

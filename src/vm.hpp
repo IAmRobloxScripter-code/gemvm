@@ -20,6 +20,11 @@ class GEM_VIRTUAL_MACHINE {
   std::vector<stack_frame*> stack_frame_stack;
   std::vector<uint64_t> return_ip_stack;
   std::vector<object*> constants;
+  GEM_VIRTUAL_MACHINE();
+  /*globals ID
+    null - 0
+    false - 1
+    true - 2*/
   std::vector<object*> globals;
   uint64_t ip = 0;
   bool halted = false;
@@ -34,6 +39,9 @@ class GEM_VIRTUAL_MACHINE {
   void garbage_collect();
   void tick_gc();
   object* pop() {
+    if (this->object_stack.size() <= 0) {
+      return this->globals[0];
+    }
     object* value = this->object_stack.back();
     this->object_stack.pop_back();
     return value;

@@ -1,5 +1,7 @@
 #include "vm.hpp"
 
+#include <ffi.h>
+
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -41,7 +43,38 @@ void GEM_VIRTUAL_MACHINE::call_function() {
       object_heap.push_back(result);
       this->tick_gc();
       break;
-    };
+    }
+    case function_types::ffi_function: {
+      std::vector<object*> args;
+
+      for (uint8_t index = 0; index < function->foreign_function_value->args;
+           ++index) {
+        args.push_back(this->pop());
+      }
+      args.pop_back();
+      std::reverse(args.begin(), args.end());
+      ffi_cif cif;
+      std::vector<ffi_type*> arg_types;
+      std::vector<void*> arg_pointers;
+      for (object* obj : args) {
+        arg_pointers.push_back(&obj);
+        arg_types.push_back(&ffi_type_pointer);
+      }
+
+      if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, arg_pointers.size(),
+                       &ffi_type_pointer, arg_types.data()) != FFI_OK)
+        this->exit_handler(1);
+
+      object* result = nullptr;
+
+      ffi_call(&cif, (void (*)())function->foreign_function_value->foreign,
+               &result, arg_pointers.data());
+
+      this->object_stack.push_back(result);
+      object_heap.push_back(result);
+      this->tick_gc();
+      break;
+    }
     default:
       break;
   }
@@ -611,7 +644,7 @@ void GEM_VIRTUAL_MACHINE::execute() {
       case instructions::get_hash: {
         object* key = this->pop();
         object* parent = this->pop();
-        
+
         if (parent->value_type != value_types::class_) {
           table_object* table_obj = static_cast<table_object*>(parent);
           this->object_stack.push_back(
@@ -641,6 +674,10 @@ void GEM_VIRTUAL_MACHINE::execute() {
         this->object_stack.push_back(class_obj);
         object_heap.push_back(class_obj);
         this->tick_gc();
+        if (class_obj->methods.find("__init__") != class_obj->methods.end()) {
+          this->object_stack.push_back(class_obj->methods["__init__"]);
+          this->call_function();
+        };
         break;
       }
       case instructions::get_attr: {
@@ -650,13 +687,36 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (self->methods.find(attr->value) != self->methods.end())
           this->object_stack.push_back(self);
         break;
-      } 
+      }
       case instructions::store_method: {
         object* value = this->pop();
         string_object* method = static_cast<string_object*>(this->pop());
-        class_object* class_obj = static_cast<class_object*>(this->object_stack.back());
+        class_object* class_obj =
+            static_cast<class_object*>(this->object_stack.back());
 
         class_obj->methods[method->value] = value;
+        break;
+      }
+      case instructions::print_str: {
+        std::string value;
+
+        while (this->ip < program_size && bytes[this->ip] != 0) {
+          value += this->read<char>();
+        }
+        this->read<uint8_t>();
+        if (value == "<state>") {
+          std::cout << "-----------------" << std::endl;
+          for (object* obj : this->object_stack) {
+            obj->print();
+          }
+          std::cout << "-----------------" << std::endl;
+        } else {
+          std::cout << value << std::endl;
+        }
+        break;
+      }
+      case instructions::pop: {
+        this->pop();
         break;
       }
       default:

@@ -53,5 +53,7 @@ enum class instructions : uint8_t {
   load_global,
   define_class,
   get_attr,
-  store_method
+  store_method,
+  print_str,
+  pop
 };

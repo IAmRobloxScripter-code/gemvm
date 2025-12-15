@@ -146,11 +146,11 @@ struct null_object : public object {
 
 enum class function_types {
   gem_function,
-  c_function,
+  ffi_function,
   native_function,
 };
 
-typedef object* (native_function_ptr)(std::vector<object*> args, void* vm_ptr);
+typedef object*(native_function_ptr)(std::vector<object*> args, void* vm_ptr);
 
 struct native_function {
   uint8_t args;
@@ -162,11 +162,19 @@ struct gem_function {
   uint64_t ip;
 };
 
+typedef object* (*ffi_function_ptr)(object*...);
+
+struct foreign_function {
+  uint8_t args;
+  ffi_function_ptr foreign;
+};
+
 struct function_object : public object {
   function_types function_type;
   union {
     gem_function* gem_function_value;
     native_function* native_function_value;
+    foreign_function* foreign_function_value;
   };
 
   function_object();
@@ -262,6 +270,16 @@ object* __getmember_class_method(std::vector<object*> args, void* vm_ptr);
 
 struct class_object : public object {
   class_object();
+
+  void mark() override;
+  void free() override;
+  void print() override;
+  std::string hash() override;
+};
+
+struct pointer_object : public object {
+  void* value;
+  pointer_object(void* value);
 
   void mark() override;
   void free() override;

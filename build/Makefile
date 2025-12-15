@@ -173,6 +173,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/natives.o: src/natives.cpp.o
+.PHONY : src/natives.o
+
+# target to build an object file
+src/natives.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gvm.dir/build.make CMakeFiles/gvm.dir/src/natives.cpp.o
+.PHONY : src/natives.cpp.o
+
+src/natives.i: src/natives.cpp.i
+.PHONY : src/natives.i
+
+# target to preprocess a source file
+src/natives.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gvm.dir/build.make CMakeFiles/gvm.dir/src/natives.cpp.i
+.PHONY : src/natives.cpp.i
+
+src/natives.s: src/natives.cpp.s
+.PHONY : src/natives.s
+
+# target to generate assembly for a file
+src/natives.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/gvm.dir/build.make CMakeFiles/gvm.dir/src/natives.cpp.s
+.PHONY : src/natives.cpp.s
+
 src/object.o: src/object.cpp.o
 .PHONY : src/object.o
 
@@ -235,6 +259,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/natives.o"
+	@echo "... src/natives.i"
+	@echo "... src/natives.s"
 	@echo "... src/object.o"
 	@echo "... src/object.i"
 	@echo "... src/object.s"

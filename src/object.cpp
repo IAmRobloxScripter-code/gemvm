@@ -1,7 +1,7 @@
 #include "object.hpp"
+
 #include <cmath>
 #include <iostream>
-#include <sstream>
 
 function_object* make_native(native_function_ptr* ptr, uint8_t argc) {
   function_object* obj = new function_object();
@@ -300,6 +300,9 @@ void function_object::print() {
 void table_object::print() {
   std::cout << "<table: " << this << ">" << std::endl;
 };
+void class_object::print() {
+  std::cout << "<class: " << this << ">" << std::endl;
+}
 // void ffi_object::print() {
 //   std::cout << "<ffi_object: " << this << ">" << std::endl;
 // };
@@ -336,9 +339,7 @@ object* table_object::copy() {
 };
 
 std::string object::hash() {
-  std::stringstream hashed;
-  hashed << this;
-  return hashed.str();
+  return "o_" + std::to_string(reinterpret_cast<uintptr_t>(this));
 }
 std::string number_object::hash() { return "n_" + std::to_string(this->value); }
 std::string string_object::hash() { return "s_" + this->value; }
@@ -362,9 +363,17 @@ class_object::class_object() {
 };
 
 std::string class_object::hash() {
-    return "c_" + std::to_string(reinterpret_cast<uintptr_t>(this));
+  return "c_" + std::to_string(reinterpret_cast<uintptr_t>(this));
 }
 
 object* __getmember_class_method(std::vector<object*> args, void* vm_ptr) {
   return args[0]->methods[static_cast<string_object*>(args[1])->value];
+}
+
+pointer_object::pointer_object(void* value) { this->value = value; }
+void pointer_object::mark() { this->marked = true; }
+void pointer_object::free() {};
+
+std::string pointer_object::hash() {
+  return "h_" + std::to_string(reinterpret_cast<uintptr_t>(this));
 }

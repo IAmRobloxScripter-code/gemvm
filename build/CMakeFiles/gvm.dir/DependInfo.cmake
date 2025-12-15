@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/scripting_entity/Desktop/projects/gemvm/src/natives.cpp" "CMakeFiles/gvm.dir/src/natives.cpp.o" "gcc" "CMakeFiles/gvm.dir/src/natives.cpp.o.d"
   "/home/scripting_entity/Desktop/projects/gemvm/src/object.cpp" "CMakeFiles/gvm.dir/src/object.cpp.o" "gcc" "CMakeFiles/gvm.dir/src/object.cpp.o.d"
   "/home/scripting_entity/Desktop/projects/gemvm/src/vm.cpp" "CMakeFiles/gvm.dir/src/vm.cpp.o" "gcc" "CMakeFiles/gvm.dir/src/vm.cpp.o.d"
   "" "gvm" "gcc" "CMakeFiles/gvm.dir/link.d"

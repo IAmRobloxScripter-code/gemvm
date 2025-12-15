@@ -16,29 +16,41 @@ static uint32_t hashString(const char* key, int length) {
 int main() {
   bytecode bytes;
   bytes.write_header();
-  bytes.write_make_constant<std::string>(value_types::string, std::string("foo"));
-  bytes.write_make_constant<double>(value_types::number, 100);
+  bytes.write_make_constant<std::string>(value_types::string,
+                                         std::string("../math.so"));
+  bytes.write_make_constant<std::string>(value_types::string,
+                                         std::string("define_function"));
+  bytes.write_make_constant<std::string>(value_types::string,
+                                         std::string("add"));
+  bytes.write_make_constant<double>(value_types::number, 3);
 
-  bytes.write_jmp("foo_end");
-  bytes.write_label("foo");
-  bytes.write_store_local(0);
-  bytes.write_add();
-  bytes.write_ret();
-  bytes.write_label("foo_end");
+  bytes.write_load_constant(0);  // math.so
+  bytes.write_load_global(3);    // ffi_open
+  bytes.write_call();            // call
+  bytes.write_store_local(0);    // local math
 
-  bytes.write_define_class();
-  bytes.write_load_constant(0);
-  bytes.write_make_function("foo", std::vector<uint8_t>());
-  bytes.write_store_method();
-  bytes.write_store_local(0);
+  bytes.write_load_local(0);     // math
+  bytes.write_load_constant(1);  // define_function
+  bytes.write_get_attr();        // self
 
-  bytes.write_load_constant(1);
-  bytes.write_load_constant(1);
+  bytes.write_load_constant(2);  // add
+  bytes.write_load_constant(3);  // 1
+
   bytes.write_load_local(0);
-  bytes.write_load_constant(0);
-  bytes.write_get_attr();
-  bytes.write_load_local(0);
-  bytes.write_load_constant(0);
+  bytes.write_load_constant(1);  // define_function
+  bytes.write_get_hash();
+  bytes.write_call();
+  bytes.write_pop();
+
+  bytes.write_load_local(0);     // math
+  bytes.write_load_constant(2);  // add
+  bytes.write_get_attr();        // self
+
+  bytes.write_load_constant(3);  // 2
+  bytes.write_load_constant(3);  // 2
+
+  bytes.write_load_local(0);     // math
+  bytes.write_load_constant(2);  // add
   bytes.write_get_hash();
   bytes.write_call();
 

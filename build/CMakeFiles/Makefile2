@@ -88,7 +88,7 @@ clean: CMakeFiles/gvm.dir/clean
 CMakeFiles/lib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=4,5 "Built target lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=5,6 "Built target lib"
 .PHONY : CMakeFiles/lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -105,7 +105,7 @@ lib: CMakeFiles/lib.dir/rule
 # codegen rule for target.
 CMakeFiles/lib.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lib.dir/build.make CMakeFiles/lib.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=4,5 "Finished codegen for target lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=5,6 "Finished codegen for target lib"
 .PHONY : CMakeFiles/lib.dir/codegen
 
 # clean rule for target.
@@ -120,12 +120,12 @@ CMakeFiles/lib.dir/clean:
 CMakeFiles/gvm.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gvm.dir/build.make CMakeFiles/gvm.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gvm.dir/build.make CMakeFiles/gvm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=1,2,3 "Built target gvm"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=1,2,3,4 "Built target gvm"
 .PHONY : CMakeFiles/gvm.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/gvm.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/gvm.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles 0
 .PHONY : CMakeFiles/gvm.dir/rule
@@ -137,7 +137,7 @@ gvm: CMakeFiles/gvm.dir/rule
 # codegen rule for target.
 CMakeFiles/gvm.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/gvm.dir/build.make CMakeFiles/gvm.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target gvm"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/scripting_entity/Desktop/projects/gemvm/build/CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target gvm"
 .PHONY : CMakeFiles/gvm.dir/codegen
 
 # clean rule for target.
