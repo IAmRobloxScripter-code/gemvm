@@ -1,0 +1,19 @@
+   0 [True] RESUME               
+   2 [True] LOAD_CONST           <code object main at 0x7facd394d200, file "../main.py", line 1>
+   4 [False] MAKE_FUNCTION        
+   6 [False] STORE_NAME           main
+   8 [True] LOAD_NAME            main
+  10 [False] PUSH_NULL            
+  12 [False] CALL                 
+  20 [False] POP_TOP              
+  22 [False] RETURN_CONST         None
+
+Constants:
+0: <code object main at 0x7fe51e34d2f0, file "../main.py", line 1>
+1: None
+
+Locals:
+
+Freevars:
+
+Cellvars:

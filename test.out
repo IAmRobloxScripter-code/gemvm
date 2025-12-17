@@ -1,0 +1,26 @@
+
+main <../test.lua:0,0> (5 instructions at 0x56182c27bd30)
+0+ params, 2 slots, 1 upvalue, 1 local, 0 constants, 1 function
+	1	[1]	VARARGPREP	0
+	2	[3]	CLOSURE  	0 0	; 0x56182c27c070
+	3	[5]	MOVE     	1 0
+	4	[5]	CALL     	1 1 1	; 0 in 0 out
+	5	[5]	RETURN   	1 1 1	; 0 out
+constants (0) for 0x56182c27bd30:
+locals (1) for 0x56182c27bd30:
+	0	foo	3	6
+upvalues (1) for 0x56182c27bd30:
+	0	_ENV	1	0
+
+function <../test.lua:1,3> (4 instructions at 0x56182c27c070)
+0 params, 2 slots, 1 upvalue, 0 locals, 2 constants, 0 functions
+	1	[2]	GETTABUP 	0 0 0	; _ENV "print"
+	2	[2]	LOADK    	1 1	; "gem"
+	3	[2]	CALL     	0 2 1	; 1 in 0 out
+	4	[3]	RETURN0  	
+constants (2) for 0x56182c27c070:
+	0	S	"print"
+	1	S	"gem"
+locals (0) for 0x56182c27c070:
+upvalues (1) for 0x56182c27c070:
+	0	_ENV	0	0
