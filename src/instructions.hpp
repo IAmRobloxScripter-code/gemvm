@@ -55,5 +55,8 @@ enum class instructions : uint8_t {
   get_attr,
   store_method,
   print_str,
-  pop
+  pop,
+
+  varargs,
+  store_varg
 };

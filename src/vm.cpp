@@ -8,7 +8,7 @@
 
 void GEM_VIRTUAL_MACHINE::exit_handler(uint8_t exit_code) {
   for (object* obj : this->object_stack) {
-    obj->print();
+    std::cout << obj->str() << std::endl;
   }
 
   exit(exit_code);
@@ -31,10 +31,14 @@ void GEM_VIRTUAL_MACHINE::call_function() {
     }
     case function_types::native_function: {
       std::vector<object*> args;
+      var_args_object* var_args = static_cast<var_args_object*>(this->pop());
+      // std::cout << static_cast<int>(var_args->value_type) << std::endl;
 
+      if (!var_args->value.empty()) args.push_back(var_args);
       for (uint8_t index = 0; index < function->native_function_value->args;
            ++index) {
-        args.push_back(this->pop());
+        args.push_back(var_args->value.back());
+        var_args->value.pop_back();
       }
 
       std::reverse(args.begin(), args.end());
@@ -46,13 +50,18 @@ void GEM_VIRTUAL_MACHINE::call_function() {
     }
     case function_types::ffi_function: {
       std::vector<object*> args;
+      var_args_object* var_args = static_cast<var_args_object*>(this->pop());
+      if (!var_args->value.empty()) args.push_back(var_args);
+      std::reverse(var_args->value.begin(), var_args->value.end());
+      var_args->value.pop_back();
 
-      for (uint8_t index = 0; index < function->foreign_function_value->args;
+      for (uint8_t index = 0; index < function->native_function_value->args;
            ++index) {
-        args.push_back(this->pop());
+        args.push_back(var_args->value.back());
+        var_args->value.pop_back();
       }
-      args.pop_back();
-      std::reverse(args.begin(), args.end());
+
+      // std::reverse(args.begin(), args.end());
       ffi_cif cif;
       std::vector<ffi_type*> arg_types;
       std::vector<void*> arg_pointers;
@@ -237,8 +246,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = x->add(y);
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__add"]);
           this->call_function();
@@ -258,8 +273,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = x->sub(y);
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__sub"]);
           this->call_function();
@@ -280,8 +301,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = x->mul(y);
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__mul"]);
           this->call_function();
@@ -302,8 +329,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = x->div(y);
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__div"]);
           this->call_function();
@@ -324,8 +357,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = x->powr(y);
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__pow"]);
           this->call_function();
@@ -346,8 +385,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = x->modl(y);
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__mod"]);
           this->call_function();
@@ -390,8 +435,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->cmp_eq(y));
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__eq"]);
           this->call_function();
@@ -412,8 +463,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->cmp_neq(y));
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__neq"]);
           this->call_function();
@@ -434,8 +491,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->cmp_gt(y));
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__gt"]);
           this->call_function();
@@ -456,8 +519,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->cmp_lt(y));
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
 
           this->object_stack.push_back(x->methods["__lt"]);
           this->call_function();
@@ -479,8 +548,15 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->cmp_gte(y));
         else {
-          this->object_stack.push_back(x);
-          this->object_stack.push_back(y);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
+
           this->object_stack.push_back(x->methods["__gte"]);
           this->call_function();
           break;
@@ -501,7 +577,15 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->cmp_lte(y));
         else {
-          this->object_stack.push_back(x);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          var_args->value.push_back(y);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
+
           this->object_stack.push_back(x->methods["__lte"]);
           this->call_function();
           break;
@@ -520,7 +604,13 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (x->value_type != value_types::class_)
           result = static_cast<boolean_object*>(x->unary_not(nullptr));
         else {
-          this->object_stack.push_back(x);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(x);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
           this->object_stack.push_back(x->methods["__unary_not"]);
           this->call_function();
           break;
@@ -625,8 +715,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
           this->object_stack.push_back(
               table_obj->value->array[static_cast<uint64_t>(index->value)]);
         } else {
-          this->object_stack.push_back(parent);
-          this->object_stack.push_back(index);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(parent);
+          var_args->value.push_back(index);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
           this->object_stack.push_back(parent->methods["__indexitem"]);
           this->call_function();
         }
@@ -650,8 +746,14 @@ void GEM_VIRTUAL_MACHINE::execute() {
           this->object_stack.push_back(
               table_obj->value->dictionary[key->hash()]);
         } else {
-          this->object_stack.push_back(parent);
-          this->object_stack.push_back(key);
+          var_args_object* var_args = new var_args_object();
+          var_args->value_type = value_types::var_args;
+
+          var_args->value.push_back(parent);
+          var_args->value.push_back(key);
+          this->object_stack.push_back(var_args);
+          object_heap.push_back(var_args);
+          this->tick_gc();
           this->object_stack.push_back(parent->methods["__getmember"]);
           this->call_function();
         }
@@ -707,7 +809,7 @@ void GEM_VIRTUAL_MACHINE::execute() {
         if (value == "<state>") {
           std::cout << "-----------------" << std::endl;
           for (object* obj : this->object_stack) {
-            obj->print();
+            std::cout << obj->str() << std::endl;
           }
           std::cout << "-----------------" << std::endl;
         } else {
@@ -717,6 +819,25 @@ void GEM_VIRTUAL_MACHINE::execute() {
       }
       case instructions::pop: {
         this->pop();
+        break;
+      }
+      case instructions::varargs: {
+        var_args_object* var_args = new var_args_object();
+        var_args->value_type = value_types::var_args;
+
+        this->object_stack.push_back(var_args);
+        object_heap.push_back(var_args);
+        this->tick_gc();
+        object_heap.push_back(var_args);
+        this->tick_gc();
+        break;
+      }
+      case instructions::store_varg: {
+        object* value = this->pop();
+        var_args_object* var_args =
+            static_cast<var_args_object*>(this->object_stack.back());
+
+        var_args->value.push_back(value);
         break;
       }
       default:
@@ -773,6 +894,17 @@ void GEM_VIRTUAL_MACHINE::garbage_collect() {
           break;
         case value_types::null:
           delete static_cast<null_object*>(obj);
+          break;
+        case value_types::table:
+          delete static_cast<table_object*>(obj);
+          break;
+        case value_types::class_:
+          delete static_cast<class_object*>(obj);
+          break;
+        case value_types::var_args:
+          delete static_cast<class_object*>(obj);
+          break;
+        case value_types::pointer:
           break;
         default:
           delete obj;

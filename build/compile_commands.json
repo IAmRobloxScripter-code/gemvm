@@ -1,25 +1,25 @@
 [
 {
   "directory": "/home/scripting_entity/Desktop/projects/gemvm/build",
-  "command": "/usr/sbin/c++   -std=gnu++20 -o CMakeFiles/lib.dir/main.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/main.cpp",
+  "command": "/usr/sbin/c++   -std=gnu++20 -g -o CMakeFiles/lib.dir/main.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/main.cpp",
   "file": "/home/scripting_entity/Desktop/projects/gemvm/main.cpp",
   "output": "CMakeFiles/lib.dir/main.cpp.o"
 },
 {
   "directory": "/home/scripting_entity/Desktop/projects/gemvm/build",
-  "command": "/usr/sbin/c++   -std=gnu++20 -o CMakeFiles/gvm.dir/src/vm.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/src/vm.cpp",
+  "command": "/usr/sbin/c++   -std=gnu++20 -g -o CMakeFiles/gvm.dir/src/vm.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/src/vm.cpp",
   "file": "/home/scripting_entity/Desktop/projects/gemvm/src/vm.cpp",
   "output": "CMakeFiles/gvm.dir/src/vm.cpp.o"
 },
 {
   "directory": "/home/scripting_entity/Desktop/projects/gemvm/build",
-  "command": "/usr/sbin/c++   -std=gnu++20 -o CMakeFiles/gvm.dir/src/object.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/src/object.cpp",
+  "command": "/usr/sbin/c++   -std=gnu++20 -g -o CMakeFiles/gvm.dir/src/object.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/src/object.cpp",
   "file": "/home/scripting_entity/Desktop/projects/gemvm/src/object.cpp",
   "output": "CMakeFiles/gvm.dir/src/object.cpp.o"
 },
 {
   "directory": "/home/scripting_entity/Desktop/projects/gemvm/build",
-  "command": "/usr/sbin/c++   -std=gnu++20 -o CMakeFiles/gvm.dir/src/natives.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/src/natives.cpp",
+  "command": "/usr/sbin/c++   -std=gnu++20 -g -o CMakeFiles/gvm.dir/src/natives.cpp.o -c /home/scripting_entity/Desktop/projects/gemvm/src/natives.cpp",
   "file": "/home/scripting_entity/Desktop/projects/gemvm/src/natives.cpp",
   "output": "CMakeFiles/gvm.dir/src/natives.cpp.o"
 }

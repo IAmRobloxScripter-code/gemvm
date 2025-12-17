@@ -80,7 +80,10 @@ enum class instructions : uint8_t {
   get_attr,
   store_method,
   print_str,
-  pop
+  pop,
+
+  varargs,
+  store_varg
 };
 
 struct label_cache_child {
@@ -269,4 +272,10 @@ class bytecode {
     this->write<uint8_t>(0);
   };
   void write_pop() { this->write<uint8_t>(to_uint8(instructions::pop)); };
+  void write_var_args() {
+    this->write<uint8_t>(to_uint8(instructions::varargs));
+  };
+  void write_store_varg() {
+    this->write<uint8_t>(to_uint8(instructions::store_varg));
+  };
 };

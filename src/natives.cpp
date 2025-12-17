@@ -12,6 +12,7 @@ object* __getmember_class_ffi_overload(__args) {
   GEM_VIRTUAL_MACHINE* vm = static_cast<GEM_VIRTUAL_MACHINE*>(vm_ptr);
   class_object* self = static_cast<class_object*>(args[0]);
   string_object* fn_name = static_cast<string_object*>(args[1]);
+
   if (self->methods.find(fn_name->value) != self->methods.end())
     return self->methods[fn_name->value];
   return vm->globals[0];

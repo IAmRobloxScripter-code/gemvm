@@ -20,6 +20,7 @@ boolean_object::boolean_object(bool value) { this->value = value; }
 null_object::null_object() = default;
 function_object::function_object() = default;
 table_object::table_object(table* value) { this->value = value; }
+var_args_object::var_args_object() = default;
 // ffi_object::ffi_object() = default;
 
 object* object::add(object* other) { return nullptr; };
@@ -289,22 +290,25 @@ void class_object::mark() {
     fn_obj.second->mark();
   }
 }
-void object::print() { std::cout << "object" << std::endl; };
-void number_object::print() { std::cout << this->value << std::endl; };
-void string_object::print() { std::cout << this->value << std::endl; };
-void boolean_object::print() { std::cout << this->value << std::endl; };
-void null_object::print() { std::cout << "null" << std::endl; };
-void function_object::print() {
-  std::cout << "<function: " << this << ">" << std::endl;
+std::string object::str() { return "object"; };
+std::string number_object::str() { return std::to_string(this->value); };
+std::string string_object::str() { return this->value; };
+std::string boolean_object::str() {
+  return this->value == false ? "false" : "true";
 };
-void table_object::print() {
-  std::cout << "<table: " << this << ">" << std::endl;
+std::string null_object::str() { return "null"; };
+std::string function_object::str() {
+  return "<function: " + std::to_string(reinterpret_cast<uintptr_t>(this)) +
+         ">";
 };
-void class_object::print() {
-  std::cout << "<class: " << this << ">" << std::endl;
+std::string table_object::str() {
+  return "<table: " + std::to_string(reinterpret_cast<uintptr_t>(this)) + ">";
+};
+std::string class_object::str() {
+  return "<class: " + std::to_string(reinterpret_cast<uintptr_t>(this)) + ">";
 }
-// void ffi_object::print() {
-//   std::cout << "<ffi_object: " << this << ">" << std::endl;
+// void ffi_object::str() {
+//   return "<ffi_object: " << this << ">" << std::endl;
 // };
 
 object* object::copy() { return nullptr; };
@@ -376,4 +380,25 @@ void pointer_object::free() {};
 
 std::string pointer_object::hash() {
   return "h_" + std::to_string(reinterpret_cast<uintptr_t>(this));
+}
+
+std::string var_args_object::hash() {
+  std::string hashed = "v_";
+
+  for (object* obj : this->value) {
+    hashed += obj->hash();
+  }
+  return hashed;
+}
+
+void var_args_object::mark() {
+  this->marked = true;
+  for (object* obj : this->value) obj->mark();
+}
+
+void var_args_object::free() {};
+
+std::string var_args_object::str() {
+  return "<var_args: " + std::to_string(reinterpret_cast<uintptr_t>(this)) +
+         ">";
 }

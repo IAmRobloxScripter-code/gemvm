@@ -11,7 +11,9 @@ enum class value_types : uint8_t {
   table,
   null,
   function,
-  class_
+  class_,
+  pointer,
+  var_args
 };
 
 struct function_object;
@@ -23,7 +25,7 @@ struct object {
 
   virtual void mark();
   virtual void free();
-  virtual void print();
+  virtual std::string str();
 
   virtual object* add(object* other);
   virtual object* sub(object* other);
@@ -49,7 +51,7 @@ struct number_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
 
   object* add(object* other) override;
   object* sub(object* other) override;
@@ -74,7 +76,7 @@ struct string_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
 
   object* add(object* other) override;
   object* sub(object* other) override;
@@ -99,7 +101,7 @@ struct boolean_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
 
   object* add(object* other) override;
   object* sub(object* other) override;
@@ -124,7 +126,7 @@ struct null_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
 
   object* add(object* other) override;
   object* sub(object* other) override;
@@ -181,7 +183,7 @@ struct function_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
 
   object* add(object* other) override;
   object* sub(object* other) override;
@@ -220,7 +222,7 @@ struct table_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
 
   object* add(object* other) override;
   object* sub(object* other) override;
@@ -246,7 +248,7 @@ struct table_object : public object {
 
 //   void mark() override;
 //   void free() override;
-//   void print() override;
+//   std::string str() override;
 
 //   object* add(object* other) override;
 //   object* sub(object* other) override;
@@ -273,7 +275,7 @@ struct class_object : public object {
 
   void mark() override;
   void free() override;
-  void print() override;
+  std::string str() override;
   std::string hash() override;
 };
 
@@ -283,5 +285,15 @@ struct pointer_object : public object {
 
   void mark() override;
   void free() override;
+  std::string hash() override;
+};
+
+struct var_args_object : public object {
+  std::vector<object*> value;
+  var_args_object();
+
+  void mark() override;
+  void free() override;
+  std::string str() override;
   std::string hash() override;
 };
